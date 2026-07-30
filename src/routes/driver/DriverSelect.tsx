@@ -30,7 +30,7 @@ export function DriverSelect() {
             key={name}
             type="button"
             onClick={() => choose(name)}
-            className="touch-target flex-1 rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
+            className="touch-target flex-1 max-h-32 rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
           >
             {name}
           </button>

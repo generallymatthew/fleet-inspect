@@ -187,7 +187,7 @@ export function InspectionStepScreen() {
               <button
                 type="button"
                 onClick={() => setSeverity('minor')}
-                className={`touch-target flex-1 rounded-xl border text-lg font-bold ${
+                className={`touch-target flex-1 max-h-24 rounded-xl border text-lg font-bold ${
                   severity === 'minor'
                     ? 'border-monitor bg-monitor text-monitor-ink'
                     : 'border-surface-border bg-bg text-ink'
@@ -198,7 +198,7 @@ export function InspectionStepScreen() {
               <button
                 type="button"
                 onClick={() => setSeverity('critical')}
-                className={`touch-target flex-1 rounded-xl border text-lg font-bold ${
+                className={`touch-target flex-1 max-h-24 rounded-xl border text-lg font-bold ${
                   severity === 'critical'
                     ? 'border-critical bg-critical text-critical-ink'
                     : 'border-surface-border bg-bg text-ink'

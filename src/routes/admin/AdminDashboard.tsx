@@ -53,7 +53,7 @@ export function AdminDashboard() {
             <Link
               key={v.id}
               to={`/admin/${v.id}`}
-              className="touch-target flex h-full items-center rounded-xl border border-critical bg-critical/20 px-4 text-lg font-bold text-ink"
+              className="touch-target flex h-full max-h-24 items-center rounded-xl border border-critical bg-critical/20 px-4 text-lg font-bold text-ink"
             >
               {v.label}
             </Link>
@@ -68,7 +68,7 @@ export function AdminDashboard() {
           {pending.map((v) => (
             <div
               key={v.id}
-              className="touch-target flex h-full items-center rounded-xl border border-pending bg-pending/20 px-4 text-lg font-bold text-ink"
+              className="touch-target flex h-full max-h-24 items-center rounded-xl border border-pending bg-pending/20 px-4 text-lg font-bold text-ink"
             >
               {v.label}
             </div>
@@ -83,7 +83,7 @@ export function AdminDashboard() {
           {passedToday.map((v) => (
             <div
               key={v.id}
-              className="touch-target flex h-full items-center rounded-xl border border-pass bg-pass/20 px-4 text-lg font-bold text-ink"
+              className="touch-target flex h-full max-h-24 items-center rounded-xl border border-pass bg-pass/20 px-4 text-lg font-bold text-ink"
             >
               {v.label}
             </div>

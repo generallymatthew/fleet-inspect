@@ -37,7 +37,7 @@ export function VehicleSelect() {
             key={vehicle.id}
             type="button"
             onClick={() => choose(vehicle)}
-            className="touch-target h-full rounded-xl border border-surface-border bg-surface p-4 text-xl font-bold text-ink active:opacity-70"
+            className="touch-target h-full max-h-40 rounded-xl border border-surface-border bg-surface p-4 text-xl font-bold text-ink active:opacity-70"
           >
             {vehicle.label}
           </button>
