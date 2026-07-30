@@ -24,13 +24,13 @@ export function DriverSelect() {
       <h1 className="text-center text-3xl font-bold">Who's Inspecting?</h1>
       <p className="text-center text-ink-dim">{vehicle.label}</p>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-1 flex-col gap-3">
         {quickSelectDrivers.map((name) => (
           <button
             key={name}
             type="button"
             onClick={() => choose(name)}
-            className="touch-target rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
+            className="touch-target flex-1 rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
           >
             {name}
           </button>

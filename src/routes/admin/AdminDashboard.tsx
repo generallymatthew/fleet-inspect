@@ -35,14 +35,14 @@ export function AdminDashboard() {
     <Screen>
       <h1 className="text-center text-3xl font-bold">Fleet Status</h1>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-1 flex-col gap-3">
         <h2 className="text-xl font-bold text-critical">Out of Service ({outOfService.length})</h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid flex-1 auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2">
           {outOfService.map((v) => (
             <Link
               key={v.id}
               to={`/admin/${v.id}`}
-              className="touch-target flex items-center rounded-xl border border-critical bg-critical/20 px-4 text-lg font-bold text-ink"
+              className="touch-target flex h-full items-center rounded-xl border border-critical bg-critical/20 px-4 text-lg font-bold text-ink"
             >
               {v.label}
             </Link>
@@ -51,13 +51,13 @@ export function AdminDashboard() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-1 flex-col gap-3">
         <h2 className="text-xl font-bold text-pending">Pending Inspection ({pending.length})</h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid flex-1 auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2">
           {pending.map((v) => (
             <div
               key={v.id}
-              className="touch-target flex items-center rounded-xl border border-pending bg-pending/20 px-4 text-lg font-bold text-ink"
+              className="touch-target flex h-full items-center rounded-xl border border-pending bg-pending/20 px-4 text-lg font-bold text-ink"
             >
               {v.label}
             </div>
@@ -66,13 +66,13 @@ export function AdminDashboard() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-1 flex-col gap-3">
         <h2 className="text-xl font-bold text-pass">Passed Today ({passedToday.length})</h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid flex-1 auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2">
           {passedToday.map((v) => (
             <div
               key={v.id}
-              className="touch-target flex items-center rounded-xl border border-pass bg-pass/20 px-4 text-lg font-bold text-ink"
+              className="touch-target flex h-full items-center rounded-xl border border-pass bg-pass/20 px-4 text-lg font-bold text-ink"
             >
               {v.label}
             </div>

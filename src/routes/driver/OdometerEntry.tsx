@@ -28,7 +28,9 @@ export function OdometerEntry() {
         {value || '0'}
       </div>
 
-      <NumericKeypad value={value} onChange={setValue} />
+      <div className="flex flex-1 flex-col">
+        <NumericKeypad value={value} onChange={setValue} />
+      </div>
 
       <BigButton variant="accent" onClick={submit} disabled={!value}>
         Start Inspection

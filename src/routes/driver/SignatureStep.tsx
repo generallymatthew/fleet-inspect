@@ -56,27 +56,29 @@ export function SignatureStep() {
         I, {driverName}, attest this inspection is accurate.
       </p>
 
-      <div className="touch-target rounded-xl border border-surface-border bg-white">
-        <SignatureCanvas
-          ref={sigRef}
-          onEnd={() => setHasSignature(true)}
-          canvasProps={{ className: 'w-full h-48 rounded-xl' }}
-        />
+      <div className="flex flex-1 flex-col gap-6">
+        <div className="touch-target flex-[2] rounded-xl border border-surface-border bg-white">
+          <SignatureCanvas
+            ref={sigRef}
+            onEnd={() => setHasSignature(true)}
+            canvasProps={{ className: 'w-full h-full rounded-xl' }}
+          />
+        </div>
+
+        <BigButton variant="neutral" onClick={clear}>
+          Clear
+        </BigButton>
+
+        {error && <p className="text-center text-fail">{error}</p>}
+
+        <BigButton
+          variant="accent"
+          onClick={submit}
+          disabled={!hasSignature || submitting}
+        >
+          {submitting ? 'Submitting…' : 'Submit Inspection'}
+        </BigButton>
       </div>
-
-      <BigButton variant="neutral" onClick={clear}>
-        Clear
-      </BigButton>
-
-      {error && <p className="text-center text-fail">{error}</p>}
-
-      <BigButton
-        variant="accent"
-        onClick={submit}
-        disabled={!hasSignature || submitting}
-      >
-        {submitting ? 'Submitting…' : 'Submit Inspection'}
-      </BigButton>
     </Screen>
   )
 }

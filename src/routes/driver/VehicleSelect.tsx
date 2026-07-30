@@ -31,13 +31,13 @@ export function VehicleSelect() {
   return (
     <Screen>
       <h1 className="text-center text-3xl font-bold">Select Vehicle</h1>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid flex-1 auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2">
         {vehicles.map((vehicle) => (
           <button
             key={vehicle.id}
             type="button"
             onClick={() => choose(vehicle)}
-            className="touch-target rounded-xl border border-surface-border bg-surface p-4 text-xl font-bold text-ink active:opacity-70"
+            className="touch-target h-full rounded-xl border border-surface-border bg-surface p-4 text-xl font-bold text-ink active:opacity-70"
           >
             {vehicle.label}
           </button>

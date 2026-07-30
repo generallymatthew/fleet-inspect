@@ -15,13 +15,13 @@ export function NumericKeypad({
   }
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid flex-1 auto-rows-fr grid-cols-3 gap-3">
       {KEYS.map((key) => (
         <button
           key={key}
           type="button"
           onClick={() => press(key)}
-          className="touch-target rounded-xl bg-surface text-3xl font-bold text-ink border border-surface-border active:opacity-70"
+          className="touch-target h-full rounded-xl bg-surface text-3xl font-bold text-ink border border-surface-border active:opacity-70"
         >
           {key === 'clear' ? 'C' : key === 'back' ? '⌫' : key}
         </button>
