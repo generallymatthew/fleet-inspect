@@ -16,7 +16,7 @@ export function DriverSelect() {
   }
 
   if (!vehicle) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/vehicle" replace />
   }
 
   return (

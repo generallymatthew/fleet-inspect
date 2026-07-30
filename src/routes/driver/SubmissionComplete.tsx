@@ -23,7 +23,7 @@ export function SubmissionComplete() {
           you're back online.
         </p>
       </div>
-      <BigButton variant="accent" onClick={() => navigate('/')}>
+      <BigButton variant="accent" onClick={() => navigate('/vehicle')}>
         Start Next Inspection
       </BigButton>
     </Screen>

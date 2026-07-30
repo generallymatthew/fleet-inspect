@@ -11,7 +11,7 @@ export function OdometerEntry() {
   const [value, setValue] = useState('')
 
   if (!vehicle || !driverName) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/vehicle" replace />
   }
 
   function submit() {

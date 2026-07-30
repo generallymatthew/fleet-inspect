@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { InspectionProvider } from './state/InspectionContext'
+import { Welcome } from './routes/driver/Welcome'
 import { VehicleSelect } from './routes/driver/VehicleSelect'
 import { DriverSelect } from './routes/driver/DriverSelect'
 import { OdometerEntry } from './routes/driver/OdometerEntry'
@@ -16,7 +17,8 @@ function App() {
     <BrowserRouter basename="/fleet-inspect">
       <InspectionProvider>
         <Routes>
-          <Route path="/" element={<VehicleSelect />} />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/vehicle" element={<VehicleSelect />} />
           <Route path="/driver" element={<DriverSelect />} />
           <Route path="/odometer" element={<OdometerEntry />} />
           <Route path="/inspect/:stepIndex" element={<InspectionStepScreen />} />

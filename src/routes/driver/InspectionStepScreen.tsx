@@ -43,7 +43,7 @@ export function InspectionStepScreen() {
   }, [step, outcomes])
 
   if (!vehicle || !driverName) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/vehicle" replace />
   }
   if (!step) {
     return <Navigate to="/inspect/0" replace />

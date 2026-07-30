@@ -15,7 +15,7 @@ export function SignatureStep() {
   const [error, setError] = useState('')
 
   if (!vehicle || !driverName || odometer === null) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/vehicle" replace />
   }
 
   function clear() {
@@ -40,7 +40,7 @@ export function SignatureStep() {
       // Context reset happens in SubmissionComplete's mount effect, not here:
       // clearing it in this same tick would re-render this still-mounted
       // route with an empty vehicle, tripping the guard above and bouncing
-      // back to "/" before the /complete navigation takes effect.
+      // back to "/vehicle" before the /complete navigation takes effect.
       navigate('/complete')
     } catch {
       setError('Something went wrong submitting this inspection. Please try again.')
