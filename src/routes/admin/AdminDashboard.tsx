@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+import { signOut } from 'firebase/auth'
 import { Screen } from '../../components/Screen'
 import { vehicles } from '../../data/vehicles'
 import { useVehicleStatuses } from '../../lib/useVehicleStatuses'
+import { auth } from '../../lib/firebase'
 
 function isToday(isoDate: string) {
   const then = new Date(isoDate)
@@ -33,7 +35,16 @@ export function AdminDashboard() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">Fleet Status</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">Fleet Status</h1>
+        <button
+          type="button"
+          onClick={() => signOut(auth)}
+          className="rounded-xl border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
+        >
+          Sign Out
+        </button>
+      </div>
 
       <section className="flex flex-1 flex-col gap-3">
         <h2 className="text-xl font-bold text-critical">Out of Service ({outOfService.length})</h2>

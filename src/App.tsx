@@ -8,6 +8,8 @@ import { SignatureStep } from './routes/driver/SignatureStep'
 import { SubmissionComplete } from './routes/driver/SubmissionComplete'
 import { AdminDashboard } from './routes/admin/AdminDashboard'
 import { AssetDetail } from './routes/admin/AssetDetail'
+import { AdminLogin } from './routes/admin/AdminLogin'
+import { AdminGuard } from './components/AdminGuard'
 
 function App() {
   return (
@@ -20,8 +22,23 @@ function App() {
           <Route path="/inspect/:stepIndex" element={<InspectionStepScreen />} />
           <Route path="/signature" element={<SignatureStep />} />
           <Route path="/complete" element={<SubmissionComplete />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/:vehicleId" element={<AssetDetail />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminGuard>
+                <AdminDashboard />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path="/admin/:vehicleId"
+            element={
+              <AdminGuard>
+                <AssetDetail />
+              </AdminGuard>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </InspectionProvider>
