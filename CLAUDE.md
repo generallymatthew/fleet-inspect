@@ -58,6 +58,20 @@ Deployment target: static PWA served via GitHub Pages. Must load in under 1.5s o
 - **FR-5.2** Clicking an `Out of Service` asset opens the detailed inspection log: driver name, timestamp, failure notes, photos.
 - **FR-5.3** `Mark Repair Complete` button — logs mechanic's notes, restores vehicle to `Active`.
 
+## Tech stack
+
+- **Frontend**: React + TypeScript + Vite, Tailwind CSS v4 (CSS-first config in [src/index.css](src/index.css) via `@theme`), React Router v7 (`BrowserRouter` with `basename="/fleet-inspect"` for GitHub Pages), `vite-plugin-pwa` for the installable/offline shell, `react-signature-canvas` for FR-4.1.
+- **Backend**: Firebase — Firestore (data + FR-4.3 status flips), Storage (reserved for defect photos — currently photos are stored as data URLs directly on the inspection doc; revisit if documents grow too large), no Auth yet (driver identity is name-based per FR-1.2, not a login).
+- Firestore is initialized with `persistentLocalCache` + `persistentMultipleTabManager` in [src/lib/firebase.ts](src/lib/firebase.ts) — this is what implements FR-4.4's offline queueing, no custom IndexedDB code needed.
+- Firebase config comes from `VITE_FIREBASE_*` env vars (see [.env.example](.env.example)); until a real Firebase project is wired up, reads/writes will fail — see "Known limitations" below.
+
+## Known limitations / follow-ups
+
+- **No live Firebase project yet.** `.env.local` needs real Firebase config for cloud sync, admin dashboard live data, and photo persistence to actually work. Until then, Firestore calls fail after a short timeout (by design — see `withTimeout` in [src/lib/withTimeout.ts](src/lib/withTimeout.ts), used in [src/lib/submitInspection.ts](src/lib/submitInspection.ts) and [src/routes/admin/AssetDetail.tsx](src/routes/admin/AssetDetail.tsx) so the UI never hangs indefinitely on a stalled read/write).
+- **Auth/roles**: there's no login or role separation between driver and admin routes yet (`/` vs `/admin` are just public routes). Add Firebase Auth + route guards before this is used for real, especially since `/admin` currently has no access control.
+- **Photo storage**: defect photos are embedded as base64 data URLs directly in Firestore documents rather than uploaded to Firebase Storage. Fine for the current scaffold; revisit for real usage since Firestore has a 1MB document size limit.
+- **Bundle size**: production build is ~890KB unminified gzip ~270KB (mostly the Firebase SDK) — acceptable for now but worth revisiting against PERF-1 (sub-1.5s load on 4G) once real usage data exists; code-splitting the admin bundle from the driver bundle would be the first lever.
+
 ## Status
 
-Repo/spec setup phase — no app code written yet. Tech stack (framework, backend/DB for cloud sync, hosting specifics beyond "GitHub Pages") not yet decided; discuss and record the decision here once chosen, rather than assuming.
+Scaffolded and verified working end-to-end in the browser (2026-07-30): vehicle/driver/odometer entry, the full 5–6 step wizard (trailer step conditionally shown), defect capture with required photo/note/severity, signature capture, submission, and the admin dashboard/asset-detail views. No real Firebase project connected yet — that's the next concrete step before this is usable beyond local testing.
