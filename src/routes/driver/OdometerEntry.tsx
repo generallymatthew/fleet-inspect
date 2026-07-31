@@ -29,12 +29,17 @@ export function OdometerEntry() {
       </div>
 
       <div className="flex flex-1 flex-col">
-        <NumericKeypad value={value} onChange={setValue} />
+        <NumericKeypad value={value} onChange={setValue}>
+          <BigButton
+            variant="accent"
+            onClick={submit}
+            disabled={!value}
+            className="h-full !max-h-24"
+          >
+            Start Inspection
+          </BigButton>
+        </NumericKeypad>
       </div>
-
-      <BigButton variant="accent" onClick={submit} disabled={!value}>
-        Start Inspection
-      </BigButton>
     </Screen>
   )
 }

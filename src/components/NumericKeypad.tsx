@@ -1,11 +1,17 @@
+import type { ReactNode } from 'react'
+
 const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'clear', '0', 'back']
 
 export function NumericKeypad({
   value,
   onChange,
+  children,
 }: {
   value: string
   onChange: (next: string) => void
+  /** Rendered as an extra full-width row in the same grid, so it shares the
+   * keys' auto-rows-fr height instead of needing to match it separately. */
+  children?: ReactNode
 }) {
   function press(key: string) {
     if (key === 'clear') return onChange('')
@@ -26,6 +32,7 @@ export function NumericKeypad({
           {key === 'clear' ? 'C' : key === 'back' ? '⌫' : key}
         </button>
       ))}
+      {children && <div className="col-span-full h-full max-h-24">{children}</div>}
     </div>
   )
 }

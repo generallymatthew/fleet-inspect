@@ -24,33 +24,38 @@ export function DriverSelect() {
       <h1 className="text-center text-3xl font-bold">Who's Inspecting?</h1>
       <p className="text-center text-ink-dim">{vehicle.label}</p>
 
-      <div className="flex flex-1 flex-col gap-3">
+      {/* One grid for the quick-select names + the custom-name input + its
+          submit button, so auto-rows-fr sizes every row identically and they
+          all fill the remaining space together, regardless of viewport
+          height. */}
+      <div className="grid flex-1 grid-cols-1 auto-rows-fr gap-3 sm:grid-cols-2">
         {quickSelectDrivers.map((name) => (
           <button
             key={name}
             type="button"
             onClick={() => choose(name)}
-            className="touch-target flex-1 max-h-32 rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
+            className="h-full max-h-32 rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
           >
             {name}
           </button>
         ))}
-      </div>
 
-      <div className="flex flex-col gap-3">
-        <label htmlFor="custom-name" className="text-lg font-semibold text-ink-dim">
-          Or enter your name
-        </label>
-        <input
-          id="custom-name"
-          value={customName}
-          onChange={(e) => setCustomName(e.target.value)}
-          className="touch-target rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
-        />
+        <div className="col-span-full flex h-full max-h-32 flex-col gap-2">
+          <label htmlFor="custom-name" className="shrink-0 text-lg font-semibold text-ink-dim">
+            Or enter your name
+          </label>
+          <input
+            id="custom-name"
+            value={customName}
+            onChange={(e) => setCustomName(e.target.value)}
+            className="flex-1 rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
+          />
+        </div>
         <BigButton
           variant="accent"
           onClick={() => choose(customName.trim())}
           disabled={!customName.trim()}
+          className="col-span-full h-full !max-h-32"
         >
           Continue
         </BigButton>
