@@ -7,18 +7,18 @@
   --color-ink: #ffffff;
   --color-ink-dim: #c7c9d1;
 
-  --color-pass: #15803d;
-  --color-pass-ink: #ffffff;
-  --color-fail: #b91c1c;
+  --color-pass: #00d97f;
+  --color-pass-ink: #000000;
+  --color-fail: #ff3b30;
   --color-fail-ink: #ffffff;
-  --color-monitor: #f59e0b;
-  --color-monitor-ink: #0a0a0f;
-  --color-critical: #991b1b;
+  --color-monitor: #ffb800;
+  --color-monitor-ink: #000000;
+  --color-critical: #ff3b30;
   --color-critical-ink: #ffffff;
-  --color-active: #15803d;
-  --color-active-ink: #ffffff;
-  --color-pending: #a16207;
-  --color-pending-ink: #ffffff;
+  --color-active: #00d97f;
+  --color-active-ink: #000000;
+  --color-pending: #ffb800;
+  --color-pending-ink: #000000;
 }
 
 @layer base {
@@ -40,5 +40,17 @@
 @layer components {
   .touch-target {
     min-height: 60px;
+  }
+
+  .bg-pass {
+    box-shadow: 0 0 16px rgba(0, 217, 127, 0.2);
+  }
+
+  .bg-fail {
+    box-shadow: 0 0 16px rgba(255, 59, 48, 0.2);
+  }
+
+  .bg-monitor {
+    box-shadow: 0 0 16px rgba(255, 184, 0, 0.2);
   }
 }
