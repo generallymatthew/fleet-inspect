@@ -5,6 +5,7 @@ import { BigButton } from '../../components/BigButton'
 import { StepCounter } from '../../components/StepCounter'
 import { inspectionSteps } from '../../data/inspectionSteps'
 import { useInspection } from '../../state/InspectionContext'
+import { compressImage } from '../../lib/compressImage'
 import type { Severity } from '../../types'
 
 export function InspectionStepScreen() {
@@ -19,6 +20,7 @@ export function InspectionStepScreen() {
   const [note, setNote] = useState('')
   const [severity, setSeverity] = useState<Severity | null>(null)
   const [photoDataUrl, setPhotoDataUrl] = useState('')
+  const [compressingPhoto, setCompressingPhoto] = useState(false)
 
   const step = !Number.isNaN(stepIndex) ? steps[stepIndex] : undefined
 
@@ -90,12 +92,15 @@ export function InspectionStepScreen() {
     setShowDefectPanel(true)
   }
 
-  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
-    const reader = new FileReader()
-    reader.onload = () => setPhotoDataUrl(reader.result as string)
-    reader.readAsDataURL(file)
+    setCompressingPhoto(true)
+    try {
+      setPhotoDataUrl(await compressImage(file))
+    } finally {
+      setCompressingPhoto(false)
+    }
   }
 
   function submitDefect() {
@@ -108,7 +113,7 @@ export function InspectionStepScreen() {
     goNext()
   }
 
-  const defectComplete = Boolean(photoDataUrl && note.trim() && severity)
+  const defectComplete = Boolean(photoDataUrl && note.trim() && severity && !compressingPhoto)
 
   return (
     <Screen>
@@ -167,7 +172,11 @@ export function InspectionStepScreen() {
           <div className="flex flex-col gap-2">
             <span className="text-lg font-semibold">Photo evidence (required)</span>
             <label className="touch-target flex cursor-pointer items-center justify-center rounded-xl border border-surface-border bg-bg text-lg font-bold">
-              {photoDataUrl ? 'Photo captured — tap to retake' : 'Take Photo'}
+              {compressingPhoto
+                ? 'Processing photo…'
+                : photoDataUrl
+                  ? 'Photo captured — tap to retake'
+                  : 'Take Photo'}
               <input
                 type="file"
                 accept="image/*"
