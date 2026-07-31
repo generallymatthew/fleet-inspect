@@ -34,7 +34,7 @@ export function OdometerEntry() {
             variant="accent"
             onClick={submit}
             disabled={!value}
-            className="h-full !max-h-24"
+            className="h-full"
           >
             Start Inspection
           </BigButton>

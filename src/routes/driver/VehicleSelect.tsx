@@ -41,13 +41,13 @@ export function VehicleSelect() {
             key={vehicle.id}
             type="button"
             onClick={() => choose(vehicle)}
-            className="h-full max-h-40 rounded-xl border border-surface-border bg-surface p-4 text-xl font-bold text-ink active:opacity-70"
+            className="h-full rounded-xl border border-surface-border bg-surface p-4 text-xl font-bold text-ink active:opacity-70"
           >
             {vehicle.label}
           </button>
         ))}
 
-        <div className="col-span-full flex h-full max-h-40 flex-col gap-2">
+        <div className="col-span-full flex h-full flex-col gap-2">
           <label htmlFor="scan-code" className="shrink-0 text-lg font-semibold text-ink-dim">
             Or scan / enter asset code
           </label>
@@ -66,7 +66,7 @@ export function VehicleSelect() {
           variant="accent"
           onClick={submitScan}
           disabled={!scanCode.trim()}
-          className="col-span-full h-full !max-h-40"
+          className="col-span-full h-full"
         >
           Use Code
         </BigButton>

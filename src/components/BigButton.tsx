@@ -17,7 +17,7 @@ export function BigButton({ variant = 'neutral', className = '', ...props }: Big
   return (
     <button
       type="button"
-      className={`touch-target w-full flex-1 max-h-32 rounded-xl text-2xl font-bold active:opacity-80 disabled:opacity-40 ${variantClasses[variant]} ${className}`}
+      className={`touch-target w-full flex-1 rounded-xl text-2xl font-bold active:opacity-80 disabled:opacity-40 ${variantClasses[variant]} ${className}`}
       {...props}
     />
   )

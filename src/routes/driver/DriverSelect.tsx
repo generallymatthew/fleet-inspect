@@ -34,13 +34,13 @@ export function DriverSelect() {
             key={name}
             type="button"
             onClick={() => choose(name)}
-            className="h-full max-h-32 rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
+            className="h-full rounded-xl border border-surface-border bg-surface text-xl font-bold text-ink active:opacity-70"
           >
             {name}
           </button>
         ))}
 
-        <div className="col-span-full flex h-full max-h-32 flex-col gap-2">
+        <div className="col-span-full flex h-full flex-col gap-2">
           <label htmlFor="custom-name" className="shrink-0 text-lg font-semibold text-ink-dim">
             Or enter your name
           </label>
@@ -55,7 +55,7 @@ export function DriverSelect() {
           variant="accent"
           onClick={() => choose(customName.trim())}
           disabled={!customName.trim()}
-          className="col-span-full h-full !max-h-32"
+          className="col-span-full h-full"
         >
           Continue
         </BigButton>
