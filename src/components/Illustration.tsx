@@ -9,6 +9,16 @@ const shared = {
 }
 
 const illustrations: Record<string, ReactElement> = {
+  welcome: (
+    <svg viewBox="0 0 160 160" {...shared}>
+      <rect x="18" y="55" width="68" height="38" rx="4" />
+      <path d="M86 93 L86 60 L108 60 L108 72 L130 72 L130 93 Z" />
+      <circle cx="45" cy="100" r="11" />
+      <circle cx="45" cy="100" r="2" fill="currentColor" stroke="none" />
+      <circle cx="112" cy="100" r="11" />
+      <circle cx="112" cy="100" r="2" fill="currentColor" stroke="none" />
+    </svg>
+  ),
   'tires-wheels': (
     <svg viewBox="0 0 160 160" {...shared}>
       <circle cx="80" cy="80" r="60" />
@@ -61,13 +71,13 @@ const illustrations: Record<string, ReactElement> = {
   ),
 }
 
-export function StepIllustration({ stepId }: { stepId: string }) {
-  const icon = illustrations[stepId]
+export function Illustration({ id }: { id: string }) {
+  const icon = illustrations[id]
   if (!icon) return null
 
   return (
     <div className="flex flex-1 items-center justify-center text-ink opacity-80">
-      <div className="h-36 w-36 sm:h-44 sm:w-44">{icon}</div>
+      <div className="h-72 w-72 sm:h-96 sm:w-96">{icon}</div>
     </div>
   )
 }

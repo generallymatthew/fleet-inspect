@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
 import { StepCounter } from '../../components/StepCounter'
-import { StepIllustration } from '../../components/StepIllustration'
+import { Illustration } from '../../components/Illustration'
 import { inspectionSteps } from '../../data/inspectionSteps'
 import { useInspection } from '../../state/InspectionContext'
 import { useLanguage } from '../../state/LanguageContext'
@@ -150,7 +150,7 @@ export function InspectionStepScreen() {
 
       {!showDefectPanel && (
         <>
-          <StepIllustration stepId={currentStep.id} />
+          <Illustration id={currentStep.id} />
           <div className="mt-auto flex flex-col gap-4">
             <BigButton variant="pass" onClick={handlePass}>
               {t.inspectionStep.passButton}

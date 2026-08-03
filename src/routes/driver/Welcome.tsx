@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
+import { Illustration } from '../../components/Illustration'
 import { useLanguage } from '../../state/LanguageContext'
 
 export function Welcome() {
@@ -45,6 +46,8 @@ export function Welcome() {
           </div>
         </div>
       </div>
+
+      <Illustration id="welcome" />
 
       <BigButton variant="accent" onClick={() => navigate('/vehicle')} className="mt-auto">
         {t.welcome.startButton}
