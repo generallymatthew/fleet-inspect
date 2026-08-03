@@ -3,6 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
 import { StepCounter } from '../../components/StepCounter'
+import { StepIllustration } from '../../components/StepIllustration'
 import { inspectionSteps } from '../../data/inspectionSteps'
 import { useInspection } from '../../state/InspectionContext'
 import { useLanguage } from '../../state/LanguageContext'
@@ -124,9 +125,10 @@ export function InspectionStepScreen() {
         <button
           type="button"
           onClick={goBack}
-          className="touch-target rounded-xl border border-surface-border bg-surface px-4 text-lg font-bold text-ink active:opacity-70"
+          aria-label={t.inspectionStep.back}
+          className="touch-target flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-ink text-3xl font-bold text-bg active:opacity-70"
         >
-          {t.inspectionStep.back}
+          ←
         </button>
         <div className="flex-1">
           <StepCounter label={t.stepCounter(stepIndex + 1, steps.length)} />
@@ -135,9 +137,10 @@ export function InspectionStepScreen() {
           type="button"
           onClick={goForward}
           disabled={!canGoForward}
-          className="touch-target rounded-xl border border-surface-border bg-surface px-4 text-lg font-bold text-ink active:opacity-70 disabled:opacity-30"
+          aria-label={t.inspectionStep.forward}
+          className="touch-target flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-ink text-3xl font-bold text-bg active:opacity-70 disabled:opacity-30"
         >
-          {t.inspectionStep.forward}
+          →
         </button>
       </div>
       <div className="flex flex-col gap-1 text-center">
@@ -146,14 +149,17 @@ export function InspectionStepScreen() {
       </div>
 
       {!showDefectPanel && (
-        <div className="flex flex-1 flex-col gap-4">
-          <BigButton variant="pass" onClick={handlePass}>
-            {t.inspectionStep.passButton}
-          </BigButton>
-          <BigButton variant="fail" onClick={handleFailTap}>
-            {t.inspectionStep.failButton}
-          </BigButton>
-        </div>
+        <>
+          <StepIllustration stepId={currentStep.id} />
+          <div className="mt-auto flex flex-col gap-4">
+            <BigButton variant="pass" onClick={handlePass}>
+              {t.inspectionStep.passButton}
+            </BigButton>
+            <BigButton variant="fail" onClick={handleFailTap}>
+              {t.inspectionStep.failButton}
+            </BigButton>
+          </div>
+        </>
       )}
 
       {showDefectPanel && (
@@ -199,7 +205,7 @@ export function InspectionStepScreen() {
               <button
                 type="button"
                 onClick={() => setSeverity('minor')}
-                className={`touch-target flex-1 rounded-xl border text-lg font-bold ${
+                className={`touch-target flex-1 rounded-full border px-4 text-lg font-bold ${
                   severity === 'minor'
                     ? 'border-monitor bg-monitor text-monitor-ink'
                     : 'border-surface-border bg-bg text-ink'
@@ -210,7 +216,7 @@ export function InspectionStepScreen() {
               <button
                 type="button"
                 onClick={() => setSeverity('critical')}
-                className={`touch-target flex-1 rounded-xl border text-lg font-bold ${
+                className={`touch-target flex-1 rounded-full border px-4 text-lg font-bold ${
                   severity === 'critical'
                     ? 'border-critical bg-critical text-critical-ink'
                     : 'border-surface-border bg-bg text-ink'

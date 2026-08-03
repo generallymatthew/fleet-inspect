@@ -6,7 +6,7 @@ const variantClasses: Record<Variant, string> = {
   pass: 'bg-pass text-pass-ink',
   fail: 'bg-fail text-fail-ink',
   neutral: 'bg-surface text-ink border border-surface-border',
-  accent: 'bg-ink text-bg',
+  accent: 'bg-cta text-cta-ink',
 }
 
 interface BigButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,7 +17,7 @@ export function BigButton({ variant = 'neutral', className = '', ...props }: Big
   return (
     <button
       type="button"
-      className={`touch-target w-full flex-1 rounded-xl text-2xl font-bold active:opacity-80 disabled:opacity-40 ${variantClasses[variant]} ${className}`}
+      className={`touch-target w-full flex-1 max-h-24 rounded-full px-6 text-2xl font-bold active:opacity-80 disabled:opacity-40 ${variantClasses[variant]} ${className}`}
       {...props}
     />
   )

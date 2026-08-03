@@ -18,11 +18,11 @@ export function SubmissionComplete() {
 
   return (
     <Screen>
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
+      <div className="flex flex-col items-center gap-4 text-center">
         <h1 className="text-3xl font-bold text-pass">{t.complete.title}</h1>
         <p className="text-ink-dim">{t.complete.body}</p>
       </div>
-      <BigButton variant="accent" onClick={() => navigate('/vehicle')}>
+      <BigButton variant="accent" onClick={() => navigate('/vehicle')} className="mt-auto">
         {t.complete.nextButton}
       </BigButton>
     </Screen>

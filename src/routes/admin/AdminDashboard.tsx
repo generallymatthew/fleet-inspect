@@ -40,7 +40,7 @@ export function AdminDashboard() {
         <button
           type="button"
           onClick={() => signOut(auth)}
-          className="rounded-xl border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
+          className="rounded-full border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
         >
           Sign Out
         </button>

@@ -1,24 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0a0f;
-  --color-surface: #17181f;
-  --color-surface-border: #33343d;
-  --color-ink: #ffffff;
-  --color-ink-dim: #c7c9d1;
+  --color-bg: #241a22;
+  --color-surface: #362732;
+  --color-surface-border: #5c4552;
+  --color-ink: #f7f0f4;
+  --color-ink-dim: #b9a0af;
 
-  --color-pass: #00d97f;
-  --color-pass-ink: #000000;
-  --color-fail: #ff3b30;
+  --color-accent: #f2643c;
+  --color-cta: #c94a2a;
+  --color-cta-ink: #ffffff;
+
+  --color-pass: #1e8e3e;
+  --color-pass-ink: #ffffff;
+  --color-fail: #d93636;
   --color-fail-ink: #ffffff;
-  --color-monitor: #ffb800;
-  --color-monitor-ink: #000000;
-  --color-critical: #ff3b30;
+  --color-monitor: #e3a008;
+  --color-monitor-ink: #241a22;
+  --color-critical: #d93636;
   --color-critical-ink: #ffffff;
-  --color-active: #00d97f;
-  --color-active-ink: #000000;
-  --color-pending: #ffb800;
-  --color-pending-ink: #000000;
+  --color-active: #1e8e3e;
+  --color-active-ink: #ffffff;
+  --color-pending: #e3a008;
+  --color-pending-ink: #241a22;
+
+  --font-sans: 'Figtree', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Caprasimo', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  --radius-xl: 1.25rem;
 }
 
 @layer base {
@@ -32,8 +41,15 @@
     margin: 0;
     background-color: var(--color-bg);
     color: var(--color-ink);
-    font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 }
 
@@ -43,14 +59,14 @@
   }
 
   .bg-pass {
-    box-shadow: 0 0 16px rgba(0, 217, 127, 0.2);
+    box-shadow: 0 0 16px rgba(30, 142, 62, 0.25);
   }
 
   .bg-fail {
-    box-shadow: 0 0 16px rgba(255, 59, 48, 0.2);
+    box-shadow: 0 0 16px rgba(217, 54, 54, 0.25);
   }
 
   .bg-monitor {
-    box-shadow: 0 0 16px rgba(255, 184, 0, 0.2);
+    box-shadow: 0 0 16px rgba(227, 160, 8, 0.25);
   }
 }

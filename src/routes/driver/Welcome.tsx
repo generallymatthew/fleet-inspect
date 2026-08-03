@@ -9,44 +9,44 @@ export function Welcome() {
 
   return (
     <Screen>
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
+      <div className="flex flex-col items-center gap-4 text-center">
         <h1 className="text-4xl font-bold">{t.welcome.title}</h1>
         <p className="text-ink-dim">{t.welcome.subtitle}</p>
-      </div>
 
-      <div className="flex flex-col gap-2">
-        <span className="text-center text-lg font-semibold text-ink-dim">
-          {t.welcome.languageLabel}
-        </span>
-        <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={() => setLanguage('en')}
-            aria-pressed={language === 'en'}
-            className={`touch-target flex-1 rounded-xl border text-xl font-bold active:opacity-80 ${
-              language === 'en'
-                ? 'border-ink bg-ink text-bg'
-                : 'border-surface-border bg-surface text-ink'
-            }`}
-          >
-            English
-          </button>
-          <button
-            type="button"
-            onClick={() => setLanguage('es')}
-            aria-pressed={language === 'es'}
-            className={`touch-target flex-1 rounded-xl border text-xl font-bold active:opacity-80 ${
-              language === 'es'
-                ? 'border-ink bg-ink text-bg'
-                : 'border-surface-border bg-surface text-ink'
-            }`}
-          >
-            Español
-          </button>
+        <div className="flex w-full flex-col gap-2 pt-2">
+          <span className="text-center text-lg font-semibold text-ink-dim">
+            {t.welcome.languageLabel}
+          </span>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={() => setLanguage('en')}
+              aria-pressed={language === 'en'}
+              className={`touch-target flex-1 rounded-full border px-4 text-xl font-bold active:opacity-80 ${
+                language === 'en'
+                  ? 'border-cta bg-cta text-cta-ink'
+                  : 'border-surface-border bg-surface text-ink'
+              }`}
+            >
+              English
+            </button>
+            <button
+              type="button"
+              onClick={() => setLanguage('es')}
+              aria-pressed={language === 'es'}
+              className={`touch-target flex-1 rounded-full border px-4 text-xl font-bold active:opacity-80 ${
+                language === 'es'
+                  ? 'border-cta bg-cta text-cta-ink'
+                  : 'border-surface-border bg-surface text-ink'
+              }`}
+            >
+              Español
+            </button>
+          </div>
         </div>
       </div>
 
-      <BigButton variant="accent" onClick={() => navigate('/vehicle')}>
+      <BigButton variant="accent" onClick={() => navigate('/vehicle')} className="mt-auto">
         {t.welcome.startButton}
       </BigButton>
     </Screen>
