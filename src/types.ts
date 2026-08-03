@@ -10,8 +10,6 @@ export interface Vehicle {
 
 export interface InspectionStepDef {
   id: string
-  title: string
-  description: string
 }
 
 export interface DefectEntry {

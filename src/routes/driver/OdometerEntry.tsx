@@ -4,10 +4,12 @@ import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
 import { NumericKeypad } from '../../components/NumericKeypad'
 import { useInspection } from '../../state/InspectionContext'
+import { useLanguage } from '../../state/LanguageContext'
 
 export function OdometerEntry() {
   const navigate = useNavigate()
   const { vehicle, driverName, setOdometer } = useInspection()
+  const { t } = useLanguage()
   const [value, setValue] = useState('')
 
   if (!vehicle || !driverName) {
@@ -21,7 +23,7 @@ export function OdometerEntry() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">Odometer / Hours</h1>
+      <h1 className="text-center text-3xl font-bold">{t.odometer.title}</h1>
       <p className="text-center text-ink-dim">{vehicle.label}</p>
 
       <div className="touch-target flex items-center justify-center rounded-xl border border-surface-border bg-surface text-4xl font-bold text-ink">
@@ -36,7 +38,7 @@ export function OdometerEntry() {
             disabled={!value}
             className="h-full"
           >
-            Start Inspection
+            {t.odometer.startButton}
           </BigButton>
         </NumericKeypad>
       </div>

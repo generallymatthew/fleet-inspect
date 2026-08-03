@@ -4,11 +4,13 @@ import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
 import { vehicles } from '../../data/vehicles'
 import { useInspection } from '../../state/InspectionContext'
+import { useLanguage } from '../../state/LanguageContext'
 import type { Vehicle } from '../../types'
 
 export function VehicleSelect() {
   const navigate = useNavigate()
   const { setVehicle } = useInspection()
+  const { t } = useLanguage()
   const [scanCode, setScanCode] = useState('')
   const [scanError, setScanError] = useState('')
 
@@ -22,7 +24,7 @@ export function VehicleSelect() {
       (v) => v.id.toLowerCase() === scanCode.trim().toLowerCase(),
     )
     if (!match) {
-      setScanError('No vehicle matches that code.')
+      setScanError(t.vehicleSelect.noMatchError)
       return
     }
     choose(match)
@@ -30,7 +32,7 @@ export function VehicleSelect() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">Select Vehicle</h1>
+      <h1 className="text-center text-3xl font-bold">{t.vehicleSelect.title}</h1>
 
       {/* One grid for vehicle buttons + the scan input + its submit button,
           so auto-rows-fr sizes every row identically and they all fill the
@@ -49,7 +51,7 @@ export function VehicleSelect() {
 
         <div className="col-span-full flex h-full flex-col gap-2">
           <label htmlFor="scan-code" className="shrink-0 text-lg font-semibold text-ink-dim">
-            Or scan / enter asset code
+            {t.vehicleSelect.scanLabel}
           </label>
           <input
             id="scan-code"
@@ -58,7 +60,7 @@ export function VehicleSelect() {
               setScanCode(e.target.value)
               setScanError('')
             }}
-            placeholder="e.g. truck-102"
+            placeholder={t.vehicleSelect.scanPlaceholder}
             className="flex-1 rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
           />
         </div>
@@ -68,7 +70,7 @@ export function VehicleSelect() {
           disabled={!scanCode.trim()}
           className="col-span-full h-full"
         >
-          Use Code
+          {t.vehicleSelect.useCodeButton}
         </BigButton>
       </div>
 

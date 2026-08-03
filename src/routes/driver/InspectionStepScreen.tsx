@@ -5,6 +5,7 @@ import { BigButton } from '../../components/BigButton'
 import { StepCounter } from '../../components/StepCounter'
 import { inspectionSteps } from '../../data/inspectionSteps'
 import { useInspection } from '../../state/InspectionContext'
+import { useLanguage } from '../../state/LanguageContext'
 import { compressImage } from '../../lib/compressImage'
 import type { Severity } from '../../types'
 
@@ -12,6 +13,7 @@ export function InspectionStepScreen() {
   const navigate = useNavigate()
   const { stepIndex: stepIndexParam } = useParams()
   const { vehicle, driverName, outcomes, recordOutcome } = useInspection()
+  const { t } = useLanguage()
 
   const steps = inspectionSteps.filter((s) => s.id !== 'hitch-trailer' || vehicle?.hasTrailer)
   const stepIndex = Number(stepIndexParam)
@@ -51,6 +53,7 @@ export function InspectionStepScreen() {
     return <Navigate to="/inspect/0" replace />
   }
   const currentStep = step
+  const stepText = t.steps[currentStep.id]
 
   const isLastStep = stepIndex === steps.length - 1
   const answeredStepIds = new Set(outcomes.map((o) => o.stepId))
@@ -123,10 +126,10 @@ export function InspectionStepScreen() {
           onClick={goBack}
           className="touch-target rounded-xl border border-surface-border bg-surface px-4 text-lg font-bold text-ink active:opacity-70"
         >
-          ← Back
+          {t.inspectionStep.back}
         </button>
         <div className="flex-1">
-          <StepCounter current={stepIndex + 1} total={steps.length} />
+          <StepCounter label={t.stepCounter(stepIndex + 1, steps.length)} />
         </div>
         <button
           type="button"
@@ -134,21 +137,21 @@ export function InspectionStepScreen() {
           disabled={!canGoForward}
           className="touch-target rounded-xl border border-surface-border bg-surface px-4 text-lg font-bold text-ink active:opacity-70 disabled:opacity-30"
         >
-          Forward →
+          {t.inspectionStep.forward}
         </button>
       </div>
       <div className="flex flex-col gap-1 text-center">
-        <h1 className="text-3xl font-bold">{step.title}</h1>
-        <p className="text-ink-dim">{step.description}</p>
+        <h1 className="text-3xl font-bold">{stepText.title}</h1>
+        <p className="text-ink-dim">{stepText.description}</p>
       </div>
 
       {!showDefectPanel && (
         <div className="flex flex-1 flex-col gap-4">
           <BigButton variant="pass" onClick={handlePass}>
-            PASS
+            {t.inspectionStep.passButton}
           </BigButton>
           <BigButton variant="fail" onClick={handleFailTap}>
-            FAIL
+            {t.inspectionStep.failButton}
           </BigButton>
         </div>
       )}
@@ -157,7 +160,7 @@ export function InspectionStepScreen() {
         <div className="flex flex-1 flex-col gap-4 rounded-xl border border-surface-border bg-surface p-4">
           <div className="flex flex-1 flex-col gap-2">
             <label htmlFor="defect-note" className="text-lg font-semibold">
-              Describe the issue
+              {t.inspectionStep.defectNoteLabel}
             </label>
             {/* Standard input triggers the device's native voice-to-text keyboard mic. */}
             <textarea
@@ -165,18 +168,18 @@ export function InspectionStepScreen() {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               className="flex-1 resize-none rounded-xl border border-surface-border bg-bg p-3 text-lg text-ink"
-              placeholder="Tap the mic on your keyboard to dictate, or type here"
+              placeholder={t.inspectionStep.defectNotePlaceholder}
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <span className="text-lg font-semibold">Photo evidence (required)</span>
+            <span className="text-lg font-semibold">{t.inspectionStep.photoLabel}</span>
             <label className="touch-target flex cursor-pointer items-center justify-center rounded-xl border border-surface-border bg-bg text-lg font-bold">
               {compressingPhoto
-                ? 'Processing photo…'
+                ? t.inspectionStep.photoProcessing
                 : photoDataUrl
-                  ? 'Photo captured — tap to retake'
-                  : 'Take Photo'}
+                  ? t.inspectionStep.photoRetake
+                  : t.inspectionStep.photoTake}
               <input
                 type="file"
                 accept="image/*"
@@ -191,7 +194,7 @@ export function InspectionStepScreen() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <span className="text-lg font-semibold">Severity</span>
+            <span className="text-lg font-semibold">{t.inspectionStep.severityLabel}</span>
             <div className="flex flex-1 flex-col gap-3">
               <button
                 type="button"
@@ -202,7 +205,7 @@ export function InspectionStepScreen() {
                     : 'border-surface-border bg-bg text-ink'
                 }`}
               >
-                Minor (Monitor)
+                {t.inspectionStep.severityMinor}
               </button>
               <button
                 type="button"
@@ -213,13 +216,13 @@ export function InspectionStepScreen() {
                     : 'border-surface-border bg-bg text-ink'
                 }`}
               >
-                Critical (Out of Service)
+                {t.inspectionStep.severityCritical}
               </button>
             </div>
           </div>
 
           <BigButton variant="accent" onClick={submitDefect} disabled={!defectComplete}>
-            Continue
+            {t.inspectionStep.continueButton}
           </BigButton>
         </div>
       )}

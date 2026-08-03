@@ -4,11 +4,13 @@ import SignatureCanvas from 'react-signature-canvas'
 import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
 import { useInspection } from '../../state/InspectionContext'
+import { useLanguage } from '../../state/LanguageContext'
 import { submitInspection } from '../../lib/submitInspection'
 
 export function SignatureStep() {
   const navigate = useNavigate()
   const { vehicle, driverName, odometer, outcomes } = useInspection()
+  const { t } = useLanguage()
   const sigRef = useRef<SignatureCanvas>(null)
   const [hasSignature, setHasSignature] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -43,7 +45,7 @@ export function SignatureStep() {
       // back to "/vehicle" before the /complete navigation takes effect.
       navigate('/complete')
     } catch {
-      setError('Something went wrong submitting this inspection. Please try again.')
+      setError(t.signature.submitError)
     } finally {
       setSubmitting(false)
     }
@@ -51,10 +53,8 @@ export function SignatureStep() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">Sign to Confirm</h1>
-      <p className="text-center text-ink-dim">
-        I, {driverName}, attest this inspection is accurate.
-      </p>
+      <h1 className="text-center text-3xl font-bold">{t.signature.title}</h1>
+      <p className="text-center text-ink-dim">{t.signature.attestation(driverName)}</p>
 
       <div className="flex flex-1 flex-col gap-6">
         <div className="touch-target flex-[2] rounded-xl border border-surface-border bg-white">
@@ -66,7 +66,7 @@ export function SignatureStep() {
         </div>
 
         <BigButton variant="neutral" onClick={clear}>
-          Clear
+          {t.signature.clearButton}
         </BigButton>
 
         {error && <p className="text-center text-fail">{error}</p>}
@@ -76,7 +76,7 @@ export function SignatureStep() {
           onClick={submit}
           disabled={!hasSignature || submitting}
         >
-          {submitting ? 'Submitting…' : 'Submit Inspection'}
+          {submitting ? t.signature.submitting : t.signature.submitButton}
         </BigButton>
       </div>
     </Screen>

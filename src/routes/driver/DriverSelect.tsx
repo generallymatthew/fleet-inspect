@@ -4,10 +4,12 @@ import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
 import { quickSelectDrivers } from '../../data/drivers'
 import { useInspection } from '../../state/InspectionContext'
+import { useLanguage } from '../../state/LanguageContext'
 
 export function DriverSelect() {
   const navigate = useNavigate()
   const { setDriverName, vehicle } = useInspection()
+  const { t } = useLanguage()
   const [customName, setCustomName] = useState('')
 
   function choose(name: string) {
@@ -21,7 +23,7 @@ export function DriverSelect() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">Who's Inspecting?</h1>
+      <h1 className="text-center text-3xl font-bold">{t.driverSelect.title}</h1>
       <p className="text-center text-ink-dim">{vehicle.label}</p>
 
       {/* One grid for the quick-select names + the custom-name input + its
@@ -42,7 +44,7 @@ export function DriverSelect() {
 
         <div className="col-span-full flex h-full flex-col gap-2">
           <label htmlFor="custom-name" className="shrink-0 text-lg font-semibold text-ink-dim">
-            Or enter your name
+            {t.driverSelect.customNameLabel}
           </label>
           <input
             id="custom-name"
@@ -57,7 +59,7 @@ export function DriverSelect() {
           disabled={!customName.trim()}
           className="col-span-full h-full"
         >
-          Continue
+          {t.driverSelect.continueButton}
         </BigButton>
       </div>
     </Screen>

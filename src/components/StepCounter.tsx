@@ -1,7 +1,3 @@
-export function StepCounter({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="text-center text-lg font-semibold text-ink-dim">
-      Step {current} of {total}
-    </div>
-  )
+export function StepCounter({ label }: { label: string }) {
+  return <div className="text-center text-lg font-semibold text-ink-dim">{label}</div>
 }
