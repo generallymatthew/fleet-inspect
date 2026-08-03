@@ -57,6 +57,7 @@ interface Translations {
     title: string
     body: string
     nextButton: string
+    dashboardLink: string
   }
   steps: Record<string, StepText>
 }
@@ -114,6 +115,7 @@ export const translations: Record<Language, Translations> = {
       title: 'Inspection Submitted',
       body: "Your inspection has been saved. If you're offline, it will sync automatically once you're back online.",
       nextButton: 'Start Next Inspection',
+      dashboardLink: 'View Management Dashboard',
     },
     steps: {
       'tires-wheels': {
@@ -194,6 +196,7 @@ export const translations: Record<Language, Translations> = {
       title: 'Inspección Enviada',
       body: 'Su inspección ha sido guardada. Si está sin conexión, se sincronizará automáticamente cuando vuelva a estar en línea.',
       nextButton: 'Iniciar Siguiente Inspección',
+      dashboardLink: 'Ver Panel de Administración',
     },
     steps: {
       'tires-wheels': {

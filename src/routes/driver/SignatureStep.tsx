@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import SignatureCanvas from 'react-signature-canvas'
 import { Screen } from '../../components/Screen'
@@ -12,9 +12,28 @@ export function SignatureStep() {
   const { vehicle, driverName, odometer, outcomes } = useInspection()
   const { t } = useLanguage()
   const sigRef = useRef<SignatureCanvas>(null)
+  const padContainerRef = useRef<HTMLDivElement>(null)
+  const [padSize, setPadSize] = useState<{ width: number; height: number } | null>(null)
   const [hasSignature, setHasSignature] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+
+  // The signature canvas can't be sized with CSS percentages/h-full: its
+  // parent's height comes from flexbox growth rather than an explicit
+  // `height`, so percentage-height on the canvas (a replaced element) falls
+  // back to its intrinsic aspect ratio instead of filling the box. Measuring
+  // the plain (canvas-free) container here and passing pixel dimensions
+  // straight to canvasProps sidesteps that entirely.
+  useLayoutEffect(() => {
+    function measure() {
+      const el = padContainerRef.current
+      if (!el) return
+      setPadSize({ width: el.clientWidth, height: el.clientHeight })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
 
   if (!vehicle || !driverName || odometer === null) {
     return <Navigate to="/vehicle" replace />
@@ -57,12 +76,17 @@ export function SignatureStep() {
       <p className="text-center text-ink-dim">{t.signature.attestation(driverName)}</p>
 
       <div className="flex flex-1 flex-col gap-6">
-        <div className="touch-target flex-[2] rounded-xl border border-surface-border bg-white">
-          <SignatureCanvas
-            ref={sigRef}
-            onEnd={() => setHasSignature(true)}
-            canvasProps={{ className: 'w-full h-full rounded-xl' }}
-          />
+        <div
+          ref={padContainerRef}
+          className="touch-target flex-[2] overflow-hidden rounded-xl border border-surface-border bg-white"
+        >
+          {padSize && (
+            <SignatureCanvas
+              ref={sigRef}
+              onEnd={() => setHasSignature(true)}
+              canvasProps={{ width: padSize.width, height: padSize.height, className: 'block' }}
+            />
+          )}
         </div>
 
         <BigButton variant="neutral" onClick={clear}>
