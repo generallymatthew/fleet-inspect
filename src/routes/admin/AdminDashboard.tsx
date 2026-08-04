@@ -59,15 +59,23 @@ export function AdminDashboard() {
 
   return (
     <Screen>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3">
         <h1 className="text-3xl font-bold">Fleet Status</h1>
-        <button
-          type="button"
-          onClick={() => signOut(auth)}
-          className="rounded-full border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
-        >
-          Sign Out
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/"
+            className="rounded-full border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
+          >
+            Fleet Inspect Home
+          </Link>
+          <button
+            type="button"
+            onClick={() => signOut(auth)}
+            className="rounded-full border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
 
       <section className="flex flex-1 flex-col gap-3">
