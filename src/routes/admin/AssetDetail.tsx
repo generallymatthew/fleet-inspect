@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../../lib/firebase'
 import { withTimeout } from '../../lib/withTimeout'
@@ -11,6 +11,18 @@ interface VehicleDoc {
   label: string
   status: VehicleStatus
   lastInspectionId?: string
+}
+
+function BackToDashboardButton() {
+  return (
+    <Link
+      to="/admin"
+      aria-label="Back to dashboard"
+      className="flex h-12 w-12 shrink-0 items-center justify-center self-start rounded-full bg-ink text-2xl font-bold text-bg active:opacity-70"
+    >
+      ←
+    </Link>
+  )
 }
 
 const READ_TIMEOUT_MS = 4000
@@ -99,6 +111,7 @@ export function AssetDetail() {
   if (loading) {
     return (
       <Screen>
+        <BackToDashboardButton />
         <p className="text-center text-ink-dim">Loading…</p>
       </Screen>
     )
@@ -107,6 +120,7 @@ export function AssetDetail() {
   if (loadError) {
     return (
       <Screen>
+        <BackToDashboardButton />
         <p className="text-center text-fail">
           Couldn't load this vehicle's record. Check your connection and try again.
         </p>
@@ -117,6 +131,7 @@ export function AssetDetail() {
   if (!vehicle) {
     return (
       <Screen>
+        <BackToDashboardButton />
         <p className="text-center text-ink-dim">No record found for this vehicle.</p>
       </Screen>
     )
@@ -126,7 +141,11 @@ export function AssetDetail() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">{vehicle.label}</h1>
+      <div className="flex items-center gap-3">
+        <BackToDashboardButton />
+        <h1 className="flex-1 text-center text-3xl font-bold">{vehicle.label}</h1>
+        <div className="w-12 shrink-0" aria-hidden="true" />
+      </div>
 
       {inspection ? (
         <div className="flex flex-col gap-4">
