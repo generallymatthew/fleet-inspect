@@ -2,8 +2,32 @@ import { Link } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { Screen } from '../../components/Screen'
 import { vehicles } from '../../data/vehicles'
-import { useVehicleStatuses } from '../../lib/useVehicleStatuses'
+import { useVehicleStatuses, type VehicleStatusDoc } from '../../lib/useVehicleStatuses'
 import { auth } from '../../lib/firebase'
+import type { Vehicle } from '../../types'
+
+function VehicleTile({
+  vehicle,
+  status,
+  baseColorClass,
+}: {
+  vehicle: Vehicle
+  status: VehicleStatusDoc | undefined
+  baseColorClass: string
+}) {
+  const hasOpenDefects = status?.status !== 'out_of_service' && status?.hasOpenDefects
+  return (
+    <Link
+      to={`/admin/${vehicle.id}`}
+      className={`touch-target flex h-full max-h-24 flex-col justify-center gap-0.5 rounded-xl border px-4 text-lg font-bold text-ink ${
+        hasOpenDefects ? 'border-monitor bg-monitor/20' : baseColorClass
+      }`}
+    >
+      {vehicle.label}
+      {hasOpenDefects && <span className="text-xs font-semibold text-monitor">⚠ Minor issue reported</span>}
+    </Link>
+  )
+}
 
 function isToday(isoDate: string) {
   const then = new Date(isoDate)
@@ -66,12 +90,12 @@ export function AdminDashboard() {
         <h2 className="text-xl font-bold text-pending">Pending Inspection ({pending.length})</h2>
         <div className="grid flex-1 auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2">
           {pending.map((v) => (
-            <div
+            <VehicleTile
               key={v.id}
-              className="touch-target flex h-full max-h-24 items-center rounded-xl border border-pending bg-pending/20 px-4 text-lg font-bold text-ink"
-            >
-              {v.label}
-            </div>
+              vehicle={v}
+              status={statuses[v.id]}
+              baseColorClass="border-pending bg-pending/20"
+            />
           ))}
           {pending.length === 0 && <p className="text-ink-dim">None</p>}
         </div>
@@ -81,12 +105,12 @@ export function AdminDashboard() {
         <h2 className="text-xl font-bold text-pass">Passed Today ({passedToday.length})</h2>
         <div className="grid flex-1 auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2">
           {passedToday.map((v) => (
-            <div
+            <VehicleTile
               key={v.id}
-              className="touch-target flex h-full max-h-24 items-center rounded-xl border border-pass bg-pass/20 px-4 text-lg font-bold text-ink"
-            >
-              {v.label}
-            </div>
+              vehicle={v}
+              status={statuses[v.id]}
+              baseColorClass="border-pass bg-pass/20"
+            />
           ))}
           {passedToday.length === 0 && <p className="text-ink-dim">None</p>}
         </div>

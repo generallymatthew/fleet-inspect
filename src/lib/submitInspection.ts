@@ -33,6 +33,7 @@ export async function submitInspection(
   input: Omit<InspectionRecord, 'id' | 'submittedAtUtc' | 'geolocation' | 'hasCriticalFail'>,
 ) {
   const hasCriticalFail = input.outcomes.some((o) => o.defect?.severity === 'critical')
+  const hasOpenDefects = input.outcomes.some((o) => Boolean(o.defect))
   const geolocation = await getGeolocation()
 
   const record: InspectionRecord = {
@@ -53,6 +54,7 @@ export async function submitInspection(
       {
         label: record.vehicleLabel,
         status: hasCriticalFail ? 'out_of_service' : 'active',
+        hasOpenDefects,
         lastInspectionId: record.id,
         lastInspectedAtUtc: record.submittedAtUtc,
         updatedAt: serverTimestamp(),

@@ -5,6 +5,7 @@ import type { VehicleStatus } from '../types'
 
 export interface VehicleStatusDoc {
   status: VehicleStatus
+  hasOpenDefects?: boolean
   lastInspectionId?: string
   lastInspectedAtUtc?: string
 }
