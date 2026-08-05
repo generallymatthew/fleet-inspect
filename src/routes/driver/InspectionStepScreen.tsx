@@ -126,9 +126,9 @@ export function InspectionStepScreen() {
           type="button"
           onClick={goBack}
           aria-label={t.inspectionStep.back}
-          className="touch-target flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-ink text-3xl font-bold text-bg active:opacity-70"
+          className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-xl border-2 border-surface-border bg-surface text-2xl font-bold text-ink active:opacity-70"
         >
-          ←
+          ‹
         </button>
         <div className="flex-1">
           <StepCounter label={t.stepCounter(stepIndex + 1, steps.length)} />
@@ -138,14 +138,20 @@ export function InspectionStepScreen() {
           onClick={goForward}
           disabled={!canGoForward}
           aria-label={t.inspectionStep.forward}
-          className="touch-target flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-ink text-3xl font-bold text-bg active:opacity-70 disabled:opacity-30"
+          className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-xl border-2 border-surface-border bg-surface text-2xl font-bold text-ink active:opacity-70 disabled:opacity-30"
         >
-          →
+          ›
         </button>
       </div>
+      <div className="h-2.5 overflow-hidden rounded-full bg-surface-border">
+        <div
+          className="h-full rounded-full bg-accent transition-[width]"
+          style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }}
+        />
+      </div>
       <div className="flex flex-col gap-1 text-center">
-        <h1 className="text-3xl font-bold">{stepText.title}</h1>
-        <p className="text-ink-dim">{stepText.description}</p>
+        <h1 className="text-3xl">{stepText.title}</h1>
+        <p className="font-semibold text-ink-dim">{stepText.description}</p>
       </div>
 
       {!showDefectPanel && (
@@ -153,19 +159,19 @@ export function InspectionStepScreen() {
           <Illustration id={currentStep.id} />
           <div className="mt-auto flex flex-col gap-4">
             <BigButton variant="pass" onClick={handlePass}>
-              {t.inspectionStep.passButton}
+              ✓ {t.inspectionStep.passButton}
             </BigButton>
             <BigButton variant="fail" onClick={handleFailTap}>
-              {t.inspectionStep.failButton}
+              ✕ {t.inspectionStep.failButton}
             </BigButton>
           </div>
         </>
       )}
 
       {showDefectPanel && (
-        <div className="flex flex-1 flex-col gap-4 rounded-xl border border-surface-border bg-surface p-4">
-          <div className="flex flex-1 flex-col gap-2">
-            <label htmlFor="defect-note" className="text-lg font-semibold">
+        <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
+          <div className="flex flex-1 flex-col gap-1">
+            <label htmlFor="defect-note" className="font-extrabold">
               {t.inspectionStep.defectNoteLabel}
             </label>
             {/* Standard input triggers the device's native voice-to-text keyboard mic. */}
@@ -173,14 +179,14 @@ export function InspectionStepScreen() {
               id="defect-note"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="flex-1 resize-none rounded-xl border border-surface-border bg-bg p-3 text-lg text-ink"
+              className="min-h-14 flex-1 resize-none rounded-xl border-2 border-surface-border bg-surface p-3 text-lg text-ink placeholder:text-placeholder"
               placeholder={t.inspectionStep.defectNotePlaceholder}
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-lg font-semibold">{t.inspectionStep.photoLabel}</span>
-            <label className="touch-target flex cursor-pointer items-center justify-center rounded-xl border border-surface-border bg-bg text-lg font-bold">
+          <div className="flex flex-col gap-1">
+            <span className="font-extrabold">{t.inspectionStep.photoLabel}</span>
+            <label className="touch-target flex cursor-pointer items-center justify-center rounded-xl border-2 border-surface-border bg-surface text-lg font-bold text-ink">
               {compressingPhoto
                 ? t.inspectionStep.photoProcessing
                 : photoDataUrl
@@ -195,20 +201,20 @@ export function InspectionStepScreen() {
               />
             </label>
             {photoDataUrl && (
-              <img src={photoDataUrl} alt="Defect evidence" className="max-h-48 rounded-xl object-contain" />
+              <img src={photoDataUrl} alt="Defect evidence" className="max-h-32 rounded-xl object-contain" />
             )}
           </div>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-lg font-semibold">{t.inspectionStep.severityLabel}</span>
-            <div className="flex flex-1 flex-col gap-3">
+          <div className="flex flex-col gap-1">
+            <span className="font-extrabold">{t.inspectionStep.severityLabel}</span>
+            <div className="flex flex-col gap-2">
               <button
                 type="button"
                 onClick={() => setSeverity('minor')}
-                className={`touch-target flex-1 rounded-full border px-4 text-lg font-bold ${
+                className={`touch-target rounded-xl border-2 px-5 text-center text-lg font-bold ${
                   severity === 'minor'
-                    ? 'border-monitor bg-monitor text-monitor-ink'
-                    : 'border-surface-border bg-bg text-ink'
+                    ? 'border-pass bg-minor-tint text-ink'
+                    : 'border-surface-border bg-surface text-ink'
                 }`}
               >
                 {t.inspectionStep.severityMinor}
@@ -216,10 +222,10 @@ export function InspectionStepScreen() {
               <button
                 type="button"
                 onClick={() => setSeverity('critical')}
-                className={`touch-target flex-1 rounded-full border px-4 text-lg font-bold ${
+                className={`touch-target rounded-xl border-2 px-5 text-center text-lg font-bold ${
                   severity === 'critical'
-                    ? 'border-critical bg-critical text-critical-ink'
-                    : 'border-surface-border bg-bg text-ink'
+                    ? 'border-fail bg-fail-tint text-ink'
+                    : 'border-surface-border bg-surface text-ink'
                 }`}
               >
                 {t.inspectionStep.severityCritical}
@@ -227,7 +233,7 @@ export function InspectionStepScreen() {
             </div>
           </div>
 
-          <BigButton variant="accent" onClick={submitDefect} disabled={!defectComplete}>
+          <BigButton variant="accent" onClick={submitDefect} disabled={!defectComplete} className="shrink-0">
             {t.inspectionStep.continueButton}
           </BigButton>
         </div>

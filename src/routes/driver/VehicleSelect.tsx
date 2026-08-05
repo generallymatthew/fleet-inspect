@@ -32,25 +32,26 @@ export function VehicleSelect() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">{t.vehicleSelect.title}</h1>
+      <h1 className="text-center text-3xl">{t.vehicleSelect.title}</h1>
 
-      {/* One grid for vehicle buttons + the scan input + its submit button,
-          so auto-rows-fr sizes every row identically and they all fill the
-          remaining space together, regardless of viewport height. */}
-      <div className="grid flex-1 grid-cols-1 auto-rows-fr gap-4 sm:grid-cols-2">
+      {/* Plain stacked flex column, not a fr-grid: each row keeps its own
+          natural height instead of all rows being forced to match the
+          tallest one (the label+input row), which is what caused overflow
+          on shorter phones. */}
+      <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
         {vehicles.map((vehicle) => (
           <button
             key={vehicle.id}
             type="button"
             onClick={() => choose(vehicle)}
-            className="h-full rounded-xl border border-surface-border bg-surface p-4 text-xl font-bold text-ink active:opacity-70"
+            className="touch-target shrink-0 rounded-xl border-2 border-surface-border bg-surface p-4 text-center text-xl font-bold text-ink active:opacity-70"
           >
             {vehicle.label}
           </button>
         ))}
 
-        <div className="col-span-full flex h-full flex-col gap-2">
-          <label htmlFor="scan-code" className="shrink-0 text-lg font-semibold text-ink-dim">
+        <div className="flex shrink-0 flex-col gap-2">
+          <label htmlFor="scan-code" className="shrink-0 font-semibold text-ink-dim">
             {t.vehicleSelect.scanLabel}
           </label>
           <input
@@ -61,14 +62,14 @@ export function VehicleSelect() {
               setScanError('')
             }}
             placeholder={t.vehicleSelect.scanPlaceholder}
-            className="flex-1 rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
+            className="touch-target rounded-xl border-2 border-surface-border bg-surface px-5 text-xl text-ink placeholder:text-placeholder"
           />
         </div>
         <BigButton
           variant="accent"
           onClick={submitScan}
           disabled={!scanCode.trim()}
-          className="col-span-full h-full"
+          className="shrink-0"
         >
           {t.vehicleSelect.useCodeButton}
         </BigButton>

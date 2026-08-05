@@ -72,13 +72,13 @@ export function SignatureStep() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">{t.signature.title}</h1>
-      <p className="text-center text-ink-dim">{t.signature.attestation(driverName)}</p>
+      <h1 className="text-center text-3xl">{t.signature.title}</h1>
+      <p className="text-center font-semibold text-ink-dim">{t.signature.attestation(driverName)}</p>
 
       <div className="flex flex-1 flex-col gap-6">
         <div
           ref={padContainerRef}
-          className="touch-target flex-[2] overflow-hidden rounded-xl border border-surface-border bg-white"
+          className="touch-target flex-[2] overflow-hidden rounded-xl border-2 border-surface-border bg-white"
         >
           {padSize && (
             <SignatureCanvas

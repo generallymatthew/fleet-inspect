@@ -1,33 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #241a22;
-  --color-surface: #362732;
-  --color-surface-border: #5c4552;
-  --color-ink: #f7f0f4;
-  --color-ink-dim: #b9a0af;
+  --color-bg: #0c0a09;
+  --color-surface: #221c18;
+  --color-surface-border: #3a322c;
+  --color-ink: #fbf7f2;
+  --color-ink-dim: #b8ada2;
+  --color-placeholder: #7c716a;
 
-  --color-accent: #f2643c;
-  --color-cta: #c94a2a;
-  --color-cta-ink: #ffffff;
+  --color-accent: #ff6a2b;
+  --color-accent-tint: #3a2214;
+  --color-progress: #ff8f5c;
+  --color-cta: #ff6a2b;
+  --color-cta-ink: #0c0a09;
 
-  --color-pass: #1e8e3e;
-  --color-pass-ink: #ffffff;
-  --color-fail: #d93636;
-  --color-fail-ink: #ffffff;
+  --color-pass: #4fd15c;
+  --color-pass-ink: #0c0a09;
+  --color-fail: #ff5449;
+  --color-fail-ink: #1a0805;
+  --color-fail-tint: #3a1512;
+  --color-minor-tint: #1c2e1c;
   --color-monitor: #e3a008;
-  --color-monitor-ink: #241a22;
-  --color-critical: #d93636;
-  --color-critical-ink: #ffffff;
-  --color-active: #1e8e3e;
-  --color-active-ink: #ffffff;
+  --color-monitor-ink: #0c0a09;
+  --color-critical: #ff5449;
+  --color-critical-ink: #1a0805;
+  --color-active: #4fd15c;
+  --color-active-ink: #0c0a09;
   --color-pending: #e3a008;
-  --color-pending-ink: #241a22;
+  --color-pending-ink: #0c0a09;
 
-  --font-sans: 'Figtree', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Caprasimo', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Archivo Black', system-ui, 'Segoe UI', Roboto, sans-serif;
 
-  --radius-xl: 1.25rem;
+  --radius-xl: 1rem;
 }
 
 @layer base {

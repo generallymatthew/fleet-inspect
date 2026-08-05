@@ -19,8 +19,8 @@ export function SubmissionComplete() {
   return (
     <Screen>
       <div className="flex flex-col items-center gap-4 text-center">
-        <h1 className="text-3xl font-bold text-pass">{t.complete.title}</h1>
-        <p className="text-ink-dim">{t.complete.body}</p>
+        <h1 className="text-3xl text-pass">{t.complete.title}</h1>
+        <p className="font-semibold text-ink-dim">{t.complete.body}</p>
       </div>
       <div className="mt-auto flex flex-col items-center gap-4">
         <BigButton variant="accent" onClick={() => navigate('/vehicle')}>

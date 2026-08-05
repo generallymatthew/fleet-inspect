@@ -27,7 +27,7 @@ export function NumericKeypad({
           key={key}
           type="button"
           onClick={() => press(key)}
-          className="touch-target h-full rounded-xl bg-surface text-3xl font-bold text-ink border border-surface-border active:opacity-70"
+          className="touch-target h-full rounded-xl border border-surface-border bg-surface text-3xl font-bold text-ink active:opacity-70"
         >
           {key === 'clear' ? 'C' : key === 'back' ? '⌫' : key}
         </button>

@@ -10,12 +10,12 @@ export function Welcome() {
 
   return (
     <Screen>
-      <div className="flex flex-col items-center gap-4 text-center">
-        <h1 className="text-4xl font-bold">{t.welcome.title}</h1>
-        <p className="text-ink-dim">{t.welcome.subtitle}</p>
+      <div className="flex flex-col items-center gap-3 text-center">
+        <h1 className="text-4xl">{t.welcome.title}</h1>
+        <p className="font-semibold text-ink-dim">{t.welcome.subtitle}</p>
 
         <div className="flex w-full flex-col gap-2 pt-2">
-          <span className="text-center text-lg font-semibold text-ink-dim">
+          <span className="text-center font-semibold text-ink-dim">
             {t.welcome.languageLabel}
           </span>
           <div className="flex gap-3">
@@ -23,9 +23,9 @@ export function Welcome() {
               type="button"
               onClick={() => setLanguage('en')}
               aria-pressed={language === 'en'}
-              className={`touch-target flex-1 rounded-full border px-4 text-xl font-bold active:opacity-80 ${
+              className={`touch-target flex-1 rounded-xl border-2 px-4 text-xl font-bold active:opacity-80 ${
                 language === 'en'
-                  ? 'border-cta bg-cta text-cta-ink'
+                  ? 'border-accent bg-accent-tint text-ink'
                   : 'border-surface-border bg-surface text-ink'
               }`}
             >
@@ -35,9 +35,9 @@ export function Welcome() {
               type="button"
               onClick={() => setLanguage('es')}
               aria-pressed={language === 'es'}
-              className={`touch-target flex-1 rounded-full border px-4 text-xl font-bold active:opacity-80 ${
+              className={`touch-target flex-1 rounded-xl border-2 px-4 text-xl font-bold active:opacity-80 ${
                 language === 'es'
-                  ? 'border-cta bg-cta text-cta-ink'
+                  ? 'border-accent bg-accent-tint text-ink'
                   : 'border-surface-border bg-surface text-ink'
               }`}
             >

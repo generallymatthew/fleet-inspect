@@ -23,10 +23,10 @@ export function OdometerEntry() {
 
   return (
     <Screen>
-      <h1 className="text-center text-3xl font-bold">{t.odometer.title}</h1>
-      <p className="text-center text-ink-dim">{vehicle.label}</p>
+      <h1 className="text-center text-3xl">{t.odometer.title}</h1>
+      <p className="text-center font-semibold text-ink-dim">{vehicle.label}</p>
 
-      <div className="touch-target flex items-center justify-center rounded-xl border border-surface-border bg-surface text-4xl font-bold text-ink">
+      <div className="flex min-h-[72px] items-center justify-center rounded-xl border-2 border-surface-border bg-surface text-4xl font-display text-ink">
         {value || '0'}
       </div>
 

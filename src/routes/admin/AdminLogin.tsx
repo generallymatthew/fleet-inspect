@@ -38,11 +38,8 @@ export function AdminLogin() {
     <Screen>
       <h1 className="text-center text-3xl font-bold">Manager Login</h1>
 
-      {/* One grid for both inputs + the submit button, so auto-rows-fr sizes
-          every row identically and they all fill the remaining space
-          together, regardless of viewport height. */}
-      <form onSubmit={submit} className="grid flex-1 grid-cols-1 auto-rows-fr gap-4">
-        <div className="flex h-full max-h-32 flex-col gap-2">
+      <form onSubmit={submit} className="flex flex-1 flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <label htmlFor="email" className="shrink-0 text-lg font-semibold text-ink-dim">
             Email
           </label>
@@ -52,11 +49,11 @@ export function AdminLogin() {
             autoComplete="username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
+            className="touch-target rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
           />
         </div>
 
-        <div className="flex h-full max-h-32 flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <label htmlFor="password" className="shrink-0 text-lg font-semibold text-ink-dim">
             Password
           </label>
@@ -66,7 +63,7 @@ export function AdminLogin() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="flex-1 rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
+            className="touch-target rounded-xl border border-surface-border bg-surface px-4 text-xl text-ink"
           />
         </div>
 
@@ -76,7 +73,7 @@ export function AdminLogin() {
           type="submit"
           variant="accent"
           disabled={!email.trim() || !password || submitting}
-          className="h-full !max-h-32"
+          className="mt-auto"
         >
           {submitting ? 'Signing in…' : 'Sign In'}
         </BigButton>
