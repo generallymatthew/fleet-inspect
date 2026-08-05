@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
@@ -7,14 +8,19 @@ import { Illustration } from '../../components/Illustration'
 import { inspectionSteps } from '../../data/inspectionSteps'
 import { useInspection } from '../../state/InspectionContext'
 import { useLanguage } from '../../state/LanguageContext'
+import { useHeaderSlots } from '../../state/HeaderSlotContext'
 import { compressImage } from '../../lib/compressImage'
 import type { Severity } from '../../types'
+
+const headerNavButtonClass =
+  'flex h-8 w-8 items-center justify-center rounded-lg border border-surface-border bg-surface text-base font-bold text-ink active:opacity-70 disabled:opacity-30'
 
 export function InspectionStepScreen() {
   const navigate = useNavigate()
   const { stepIndex: stepIndexParam } = useParams()
   const { vehicle, driverName, outcomes, recordOutcome } = useInspection()
   const { t } = useLanguage()
+  const { leftSlot, rightSlot } = useHeaderSlots()
 
   const steps = inspectionSteps.filter((s) => s.id !== 'hitch-trailer' || vehicle?.hasTrailer)
   const stepIndex = Number(stepIndexParam)
@@ -121,28 +127,27 @@ export function InspectionStepScreen() {
 
   return (
     <Screen>
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={goBack}
-          aria-label={t.inspectionStep.back}
-          className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-xl border-2 border-surface-border bg-surface text-2xl font-bold text-ink active:opacity-70"
-        >
-          ‹
-        </button>
-        <div className="flex-1">
-          <StepCounter label={t.stepCounter(stepIndex + 1, steps.length)} />
-        </div>
-        <button
-          type="button"
-          onClick={goForward}
-          disabled={!canGoForward}
-          aria-label={t.inspectionStep.forward}
-          className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-xl border-2 border-surface-border bg-surface text-2xl font-bold text-ink active:opacity-70 disabled:opacity-30"
-        >
-          ›
-        </button>
-      </div>
+      {leftSlot &&
+        createPortal(
+          <button type="button" onClick={goBack} aria-label={t.inspectionStep.back} className={headerNavButtonClass}>
+            ‹
+          </button>,
+          leftSlot,
+        )}
+      {rightSlot &&
+        createPortal(
+          <button
+            type="button"
+            onClick={goForward}
+            disabled={!canGoForward}
+            aria-label={t.inspectionStep.forward}
+            className={headerNavButtonClass}
+          >
+            ›
+          </button>,
+          rightSlot,
+        )}
+      <StepCounter label={t.stepCounter(stepIndex + 1, steps.length)} />
       <div className="h-2.5 overflow-hidden rounded-full bg-surface-border">
         <div
           className="h-full rounded-full bg-accent transition-[width]"
@@ -169,7 +174,7 @@ export function InspectionStepScreen() {
       )}
 
       {showDefectPanel && (
-        <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
+        <div className="flex flex-1 flex-col gap-1 overflow-y-auto">
           <div className="flex flex-1 flex-col gap-1">
             <label htmlFor="defect-note" className="font-extrabold">
               {t.inspectionStep.defectNoteLabel}
@@ -179,7 +184,7 @@ export function InspectionStepScreen() {
               id="defect-note"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="min-h-14 flex-1 resize-none rounded-xl border-2 border-surface-border bg-surface p-3 text-lg text-ink placeholder:text-placeholder"
+              className="min-h-12 flex-1 resize-none rounded-xl border-2 border-surface-border bg-surface p-3 text-lg text-ink placeholder:text-placeholder"
               placeholder={t.inspectionStep.defectNotePlaceholder}
             />
           </div>

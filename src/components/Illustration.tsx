@@ -3,7 +3,7 @@ import type { ReactElement } from 'react'
 const shared = {
   fill: 'none',
   stroke: 'currentColor',
-  strokeWidth: 2.2,
+  strokeWidth: 3,
   strokeLinecap: 'round' as const,
   strokeLinejoin: 'round' as const,
 }
@@ -77,8 +77,8 @@ export function Illustration({ id }: { id: string }) {
 
   return (
     <div className="flex flex-1 items-center justify-center">
-      <div className="flex h-44 w-44 shrink-0 items-center justify-center rounded-full border border-surface-border bg-surface text-progress sm:h-48 sm:w-48">
-        <div className="h-24 w-24 sm:h-28 sm:w-28">{icon}</div>
+      <div className="flex h-48 w-48 shrink-0 items-center justify-center rounded-full border border-surface-border bg-surface text-progress sm:h-56 sm:w-56">
+        <div className="h-28 w-28 sm:h-32 sm:w-32">{icon}</div>
       </div>
     </div>
   )

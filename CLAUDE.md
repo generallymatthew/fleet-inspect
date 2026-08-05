@@ -54,7 +54,7 @@ Deployment target: static PWA served via GitHub Pages. Must load in under 1.5s o
 
 ## Module 5 — Admin Dashboard & Asset Management
 
-- **FR-5.1** Fleet status grid, three buckets: `Passed Today` (green), `Pending Inspection` (yellow), `Out of Service` (red).
+- **FR-5.1** Fleet status grid, three buckets: `Passed` (green) — any vehicle with a non-critical inspection on record, not just today's; `Pending Inspection` (yellow) — vehicles with no inspection on record at all; `Out of Service` (red). (Changed 2026-08-05 from a strict "today only" Passed bucket — a vehicle inspected yesterday and not re-inspected was incorrectly showing as pending.)
 - **FR-5.2** Clicking an `Out of Service` asset opens the detailed inspection log: driver name, timestamp, failure notes, photos.
 - **FR-5.3** `Mark Repair Complete` button — logs mechanic's notes, restores vehicle to `Active`.
 

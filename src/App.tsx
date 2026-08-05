@@ -12,39 +12,46 @@ import { AdminDashboard } from './routes/admin/AdminDashboard'
 import { AssetDetail } from './routes/admin/AssetDetail'
 import { AdminLogin } from './routes/admin/AdminLogin'
 import { AdminGuard } from './components/AdminGuard'
+import { AppHeader } from './components/AppHeader'
+import { HeaderSlotProvider } from './state/HeaderSlotContext'
 
 function App() {
   return (
     <BrowserRouter basename="/fleet-inspect">
       <LanguageProvider>
         <InspectionProvider>
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/vehicle" element={<VehicleSelect />} />
-            <Route path="/driver" element={<DriverSelect />} />
-            <Route path="/odometer" element={<OdometerEntry />} />
-            <Route path="/inspect/:stepIndex" element={<InspectionStepScreen />} />
-            <Route path="/signature" element={<SignatureStep />} />
-            <Route path="/complete" element={<SubmissionComplete />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route
-              path="/admin"
-              element={
-                <AdminGuard>
-                  <AdminDashboard />
-                </AdminGuard>
-              }
-            />
-            <Route
-              path="/admin/:vehicleId"
-              element={
-                <AdminGuard>
-                  <AssetDetail />
-                </AdminGuard>
-              }
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <HeaderSlotProvider>
+            <div className="flex min-h-svh flex-col">
+              <AppHeader />
+              <Routes>
+                <Route path="/" element={<Welcome />} />
+                <Route path="/vehicle" element={<VehicleSelect />} />
+                <Route path="/driver" element={<DriverSelect />} />
+                <Route path="/odometer" element={<OdometerEntry />} />
+                <Route path="/inspect/:stepIndex" element={<InspectionStepScreen />} />
+                <Route path="/signature" element={<SignatureStep />} />
+                <Route path="/complete" element={<SubmissionComplete />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminGuard>
+                      <AdminDashboard />
+                    </AdminGuard>
+                  }
+                />
+                <Route
+                  path="/admin/:vehicleId"
+                  element={
+                    <AdminGuard>
+                      <AssetDetail />
+                    </AdminGuard>
+                  }
+                />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </div>
+          </HeaderSlotProvider>
         </InspectionProvider>
       </LanguageProvider>
     </BrowserRouter>

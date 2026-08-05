@@ -2,6 +2,6 @@ import type { ReactNode } from 'react'
 
 export function Screen({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto flex min-h-svh max-w-2xl flex-col gap-4 p-4">{children}</div>
+    <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-3 p-3">{children}</div>
   )
 }

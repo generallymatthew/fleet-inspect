@@ -1,10 +1,15 @@
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { Screen } from '../../components/Screen'
 import { vehicles } from '../../data/vehicles'
 import { useVehicleStatuses, type VehicleStatusDoc } from '../../lib/useVehicleStatuses'
 import { auth } from '../../lib/firebase'
+import { useHeaderSlots } from '../../state/HeaderSlotContext'
 import type { Vehicle } from '../../types'
+
+const headerPillClass =
+  'rounded-full border border-surface-border bg-surface px-3 py-1.5 text-xs font-bold text-ink-dim active:opacity-70'
 
 function VehicleTile({
   vehicle,
@@ -19,7 +24,7 @@ function VehicleTile({
   return (
     <Link
       to={`/admin/${vehicle.id}`}
-      className={`touch-target flex h-full max-h-24 flex-col justify-center gap-0.5 rounded-xl border px-4 text-lg font-bold text-ink ${
+      className={`touch-target flex h-full max-h-24 flex-col items-center justify-center gap-0.5 rounded-xl border px-4 text-center text-lg font-bold text-ink ${
         hasOpenDefects ? 'border-monitor bg-monitor/20' : baseColorClass
       }`}
     >
@@ -29,20 +34,11 @@ function VehicleTile({
   )
 }
 
-function isToday(isoDate: string) {
-  const then = new Date(isoDate)
-  const now = new Date()
-  return (
-    then.getUTCFullYear() === now.getUTCFullYear() &&
-    then.getUTCMonth() === now.getUTCMonth() &&
-    then.getUTCDate() === now.getUTCDate()
-  )
-}
-
 export function AdminDashboard() {
   const statuses = useVehicleStatuses()
+  const { leftSlot, rightSlot } = useHeaderSlots()
 
-  const passedToday: typeof vehicles = []
+  const passed: typeof vehicles = []
   const pending: typeof vehicles = []
   const outOfService: typeof vehicles = []
 
@@ -50,8 +46,12 @@ export function AdminDashboard() {
     const status = statuses[vehicle.id]
     if (status?.status === 'out_of_service') {
       outOfService.push(vehicle)
-    } else if (status?.lastInspectedAtUtc && isToday(status.lastInspectedAtUtc)) {
-      passedToday.push(vehicle)
+    } else if (status?.lastInspectedAtUtc) {
+      // Any non-critical inspection on record clears a vehicle out of the
+      // pending list, not just one submitted today — otherwise a vehicle
+      // that passed yesterday and hasn't been re-inspected yet incorrectly
+      // reads as "pending" forever.
+      passed.push(vehicle)
     } else {
       pending.push(vehicle)
     }
@@ -59,24 +59,20 @@ export function AdminDashboard() {
 
   return (
     <Screen>
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="text-3xl font-bold">Fleet Status</h1>
-        <div className="flex items-center gap-2">
-          <Link
-            to="/"
-            className="rounded-full border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
-          >
-            Fleet Inspect Home
-          </Link>
-          <button
-            type="button"
-            onClick={() => signOut(auth)}
-            className="rounded-full border border-surface-border bg-surface px-4 py-2 text-sm font-bold text-ink-dim active:opacity-70"
-          >
+      {leftSlot &&
+        createPortal(
+          <Link to="/" className={headerPillClass}>
+            Inspect
+          </Link>,
+          leftSlot,
+        )}
+      {rightSlot &&
+        createPortal(
+          <button type="button" onClick={() => signOut(auth)} className={headerPillClass}>
             Sign Out
-          </button>
-        </div>
-      </div>
+          </button>,
+          rightSlot,
+        )}
 
       <section className="flex flex-1 flex-col gap-3">
         <h2 className="text-xl font-bold text-critical">Out of Service ({outOfService.length})</h2>
@@ -85,7 +81,7 @@ export function AdminDashboard() {
             <Link
               key={v.id}
               to={`/admin/${v.id}`}
-              className="touch-target flex h-full max-h-24 items-center rounded-xl border border-critical bg-critical/20 px-4 text-lg font-bold text-ink"
+              className="touch-target flex h-full max-h-24 items-center justify-center rounded-xl border border-critical bg-critical/20 px-4 text-center text-lg font-bold text-ink"
             >
               {v.label}
             </Link>
@@ -110,9 +106,9 @@ export function AdminDashboard() {
       </section>
 
       <section className="flex flex-1 flex-col gap-3">
-        <h2 className="text-xl font-bold text-pass">Passed Today ({passedToday.length})</h2>
+        <h2 className="text-xl font-bold text-pass">Passed ({passed.length})</h2>
         <div className="grid flex-1 auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2">
-          {passedToday.map((v) => (
+          {passed.map((v) => (
             <VehicleTile
               key={v.id}
               vehicle={v}
@@ -120,7 +116,7 @@ export function AdminDashboard() {
               baseColorClass="border-pass bg-pass/20"
             />
           ))}
-          {passedToday.length === 0 && <p className="text-ink-dim">None</p>}
+          {passed.length === 0 && <p className="text-ink-dim">None</p>}
         </div>
       </section>
     </Screen>
