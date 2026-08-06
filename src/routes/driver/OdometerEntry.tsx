@@ -8,9 +8,9 @@ import { useLanguage } from '../../state/LanguageContext'
 
 export function OdometerEntry() {
   const navigate = useNavigate()
-  const { vehicle, driverName, setOdometer } = useInspection()
+  const { vehicle, driverName, odometer, setOdometer } = useInspection()
   const { t } = useLanguage()
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(odometer ? String(odometer) : '')
 
   if (!vehicle || !driverName) {
     return <Navigate to="/vehicle" replace />

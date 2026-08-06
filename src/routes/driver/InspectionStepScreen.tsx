@@ -12,8 +12,10 @@ import { useHeaderSlots } from '../../state/HeaderSlotContext'
 import { compressImage } from '../../lib/compressImage'
 import type { Severity } from '../../types'
 
+// Visual box stays compact to fit the header; before:-inset-[14px] pads the
+// tappable hit area out to the 60px UX-2 floor without growing the header.
 const headerNavButtonClass =
-  'flex h-8 w-8 items-center justify-center rounded-lg border border-surface-border bg-surface text-base font-bold text-ink active:opacity-70 disabled:opacity-30'
+  'relative flex h-8 w-8 items-center justify-center rounded-lg border border-surface-border bg-surface text-base font-bold text-ink active:opacity-70 disabled:opacity-30 before:absolute before:-inset-[14px] before:content-[""]'
 
 export function InspectionStepScreen() {
   const navigate = useNavigate()

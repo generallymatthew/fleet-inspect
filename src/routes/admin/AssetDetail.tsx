@@ -5,7 +5,12 @@ import { db } from '../../lib/firebase'
 import { withTimeout } from '../../lib/withTimeout'
 import { Screen } from '../../components/Screen'
 import { BigButton } from '../../components/BigButton'
+import { translations } from '../../lib/translations'
 import type { InspectionRecord, VehicleStatus } from '../../types'
+
+// Admin is English-only (see CLAUDE.md), so the driver-flow step titles are
+// read straight from the 'en' dictionary rather than through LanguageContext.
+const stepTitles = translations.en.steps
 
 interface VehicleDoc {
   label: string
@@ -15,10 +20,12 @@ interface VehicleDoc {
 
 function BackToDashboardButton() {
   return (
+    // Visual box stays a compact 48px circle; before:-inset-1.5 pads the
+    // tappable hit area out to the 60px UX-2 floor without growing the icon.
     <Link
       to="/admin"
       aria-label="Back to dashboard"
-      className="flex h-12 w-12 shrink-0 items-center justify-center self-start rounded-full bg-ink text-2xl font-bold text-bg active:opacity-70"
+      className="relative flex h-12 w-12 shrink-0 items-center justify-center self-start rounded-full bg-ink text-2xl font-bold text-bg active:opacity-70 before:absolute before:-inset-1.5 before:content-['']"
     >
       ←
     </Link>
@@ -164,8 +171,8 @@ export function AssetDetail() {
             {defects.length === 0 && <p className="text-ink-dim">No defects reported.</p>}
             {defects.map((o) => (
               <div key={o.stepId} className="rounded-xl border border-surface-border bg-surface p-4">
-                <p className="font-bold capitalize">
-                  {o.stepId.replace(/-/g, ' ')} —{' '}
+                <p className="font-bold">
+                  {stepTitles[o.stepId]?.title ?? o.stepId.replace(/-/g, ' ')} —{' '}
                   <span className={o.defect!.severity === 'critical' ? 'text-critical' : 'text-monitor'}>
                     {o.defect!.severity}
                   </span>

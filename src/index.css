@@ -75,4 +75,33 @@
   .bg-monitor {
     box-shadow: 0 0 16px rgba(227, 160, 8, 0.25);
   }
+
+  /* Google's standard reset for the Material Symbols icon font. */
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Unlayered on purpose: sizes the step-icon glyph to match its circle
+   exactly. Kept outside @layer so it reliably wins over the reset above
+   regardless of utility class ordering. */
+.illustration-icon {
+  font-size: 192px;
+}
+
+@media (min-width: 40rem) {
+  .illustration-icon {
+    font-size: 224px;
+  }
 }
